@@ -1,0 +1,128 @@
+program : translation_unit
+
+translation_unit : external_declaration
+                | translation_unit external_declaration
+
+external_declaration : function_definition
+                    | declaration
+
+function_definition : type_specifier declarator compound_statement
+                   | STATIC type_specifier declarator compound_statement
+
+declaration : type_specifier declarator ';'
+           | EXTERN type_specifier declarator ';'
+
+declaration_list_opt : empty
+                    | declaration_list
+
+declaration_list : declaration
+                | declaration_list declaration
+
+type_specifier : INT
+               | FLOAT
+               | CHAR
+               | VOID
+
+declarator : direct_declarator
+           | '*' declarator
+
+direct_declarator : ID
+                 | direct_declarator '(' parameter_type_list ')'
+                 | direct_declarator '(' ')'
+
+parameter_type_list : parameter_list
+                   | parameter_list ',' ELLIPSIS
+
+parameter_list : parameter_declaration
+              | parameter_list ',' parameter_declaration
+
+parameter_declaration : type_specifier declarator
+
+compound_statement : '{' declaration_list_opt statement_list '}'
+                  | '{' declaration_list_opt '}'
+
+statement_list : statement
+              | statement_list statement
+
+statement : open_statement
+          | closed_statement
+
+open_statement : WHILE '(' expression ')' open_statement
+               | IF '(' expression ')' closed_statement ELSE open_statement
+               | IF '(' expression ')' closed_statement ELSE closed_statement
+               | IF '(' expression ')' open_statement
+               | FOR '(' expression_statement expression_statement expression ')' open_statement
+               | FOR '(' expression_statement expression_statement expression ')' closed_statement
+               | other_statement
+
+closed_statement : WHILE '(' expression ')' closed_statement
+                | IF '(' expression ')' closed_statement ELSE closed_statement
+                | IF '(' expression ')' other_statement
+
+expression_statement : expression ';'
+
+expression : equality_expression
+           | assigment_expression
+
+assigment_expression : equality_expression '=' expression
+                    | equality_expression ADDEQ expression
+                    | equality_expression MODEQ expression
+                    | equality_expression DIVEQ expression
+                    | equality_expression MULEQ expression
+                    | equality_expression SUBEQ expression
+
+equality_expression : relational_expression
+                  | equality_expression EQ relational_expression
+                  | equality_expression NE relational_expression
+
+relational_expression : additive_expression
+                    | relational_expression '<' additive_expression
+                    | relational_expression LT additive_expression
+                    | relational_expression GT additive_expression
+                    | relational_expression LE additive_expression
+                    | relational_expression '>' additive_expression
+                    | relational_expression LOR additive_expression
+                    | relational_expression LAND additive_expression
+                    | relational_expression GE additive_expression
+
+additive_expression : mult_expression
+                  | additive_expression '+' mult_expression
+                  | additive_expression '-' mult_expression
+
+mult_expression : unary_expression
+               | mult_expression '*' unary_expression
+               | mult_expression '/' unary_expression
+               | mult_expression '%' unary_expression
+
+unary_expression : postfix_expression
+                | '-' unary_expression
+                | '+' unary_expression
+                | '!' unary_expression
+                | '*' unary_expression
+                | '&' unary_expression
+
+postfix_expression : primary_expression
+                 | postfix_expression '(' argument_expression_list ')'
+                 | postfix_expression '(' ')'
+                 | postfix_expression '[' expression ']'
+
+argument_expression_list : expression
+                       | argument_expression_list ',' expression
+
+primary_expression : ID
+                  | INUMBER
+                  | FNUMBER
+                  | CONST
+                  | CHARACTER
+                  | string_literal
+                  | '(' expression ')'
+
+string_literal : STRING
+              | string_literal STRING
+
+jumpstatement : RETURN ';'
+              | RETURN expression ';'
+              | BREAK ';'
+              | CONTINUE ';'
+
+empty : empty

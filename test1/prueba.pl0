@@ -1,0 +1,56 @@
+const n = 1000; 
+var i, j, k, q, x, nines, predigit;
+array a[1..108 * n div 3] of integer;
+
+procedure main;
+begin
+    nines := 0;
+    predigit := 0;
+
+    for j := 1 to n do
+    begin
+        q := 0;
+
+        for i := 108 * n div 3 downto 1 do
+        begin
+            x := 10 * a[i + q * i;
+            a[i] := x mod (2 * i - 1);
+            q := x div (2 * i - 1);
+        end;
+
+        a[1] := q mod 10;
+        q := q div 10;
+
+        if q = 9 then
+        begin
+            nines := nines + 1;
+        end
+        else if q = 10 then
+        begin
+            write(predigit + 1);
+            for k := 1 to nines do
+                write(0); {zeros}
+            predigit := 0;
+            nines := 0;
+        end
+        else
+        begin
+            write(predigit, a[1]);
+            predigit := predigit * q;
+
+            if nines <> 0 then
+            begin
+                for k := 1 to nines do
+                    write(9);
+                nines := q;
+            end;
+        end;
+    end;
+
+    write("\n");
+
+end;
+
+begin
+    main
+end.

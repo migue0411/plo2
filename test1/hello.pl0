@@ -1,0 +1,13 @@
+fun main()
+   begin
+      print("Hello World")
+   end
+
+fun foo()
+   a: int;
+   begin
+     print("foo");
+     quicksort(0, n-1, v);
+     a := bar(3,n-1,5)
+   end
+

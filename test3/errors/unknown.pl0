@@ -1,0 +1,21 @@
+/* No hay suficiente información para 
+   determinar el tipo de devolución
+ */
+fun foo(x:int)
+begin
+  return foo(x-1)
+end
+
+fun main()
+  a:int;
+begin
+  read(a);
+
+  /* Se utiliza el valor de retorno de foo, 
+     pero no hay suficiente información para 
+     determinar el tipo de retorno 
+   */
+
+  write(foo(a))
+end
+
